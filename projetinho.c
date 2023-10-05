@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 typedef struct {
   int codigo; // Definindo o código da tarefa 
   char nome[30]; // Definindo o nome da tarefa com no maximo 30 caracteres

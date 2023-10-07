@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#ifndef FILA_H_INCLUDED
-#define FILA_H_INCLUDED
+
 struct data{;
     int dia;
     int mes;
@@ -24,8 +23,6 @@ struct fila {
   No *inicio;
   No *fim;
 };typedef struct fila Fila;
-
-
 
 No* inserir_fim(No *f, Tarefa t) {
   No *novo = (No*) malloc(sizeof(No));
@@ -90,8 +87,46 @@ Fila* liberaFila (Fila* f)
     return NULL;
 }
 
+
+
 }
-  int main() {
+  int main() 
+{
+  struct Tarefa tarefa; 
+  
+    printf("Digite o codigo da tarefa: "/n);
+  
+    scanf("%d", &tarefa.codigo);
+  
+    printf("Digite o nome da tarefa: "/n);
+  
+    scanf("%s", &tarefa.nome);
+  
+    printf("Digite o nome do projeto: "/n);
+  
+    scanf("%s", &tarefa.projeto); 
+   
+    printf("Digite a data de inicio: "/n);
+
+    scanf("%d", &tarefa.inicio.dia);
+    scanf("%d", &tarefa.inicio.mes);
+    scanf("%d", &tarefa.inicio.ano);
+
+    printf("Digite a data de termino: "/n);
+
+    scanf("%d", &tarefa.termino.dia);
+    scanf("%d", &tarefa.termino.mes);
+    scanf("%d", &tarefa.termino.ano);
+
+    printf("Codigo: %d\n", tarefa.codigo);
+
+    printf("Nome: %s\n", tarefa.nome);
+
+    printf("Projeto: %s\n", tarefa.projeto);
+
+    printf("Data de inicio: %d/%d/%d\n", tarefa.inicio.dia, tarefa.inicio.mes, tarefa.inicio.ano);
+
+    printf("Data de termino: %d/%d/%d\n", tarefa.termino.dia, tarefa.termino.mes, tarefa.termino.ano);
 
 
 

@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <locale.h>
 
 struct data{;
     int dia;
@@ -41,7 +43,7 @@ void InsereFila (Fila* f, Tarefa tarefa)
     f->inicio = f->fim;
 }
 
-No* retira_inicio (No* ini) 
+No* retira_inicio (No* inicio)
 {
     No* p = inicio->prox;
     free(inicio);
@@ -76,7 +78,7 @@ void imprimeFila (Fila* f)
 
 Fila* liberaFila (Fila* f)
 {
-    No* q = f->ini;
+    No* q = f->inicio;
     while (q!=NULL)
     {
         No* t = q->prox;
@@ -90,22 +92,22 @@ Fila* liberaFila (Fila* f)
 
 
 }
-  int main() 
+  int main()
 {
-  struct Tarefa tarefa; 
-  
+  struct Tarefa tarefa;
+
     printf("Digite o codigo da tarefa: "/n);
-  
+
     scanf("%d", &tarefa.codigo);
-  
+
     printf("Digite o nome da tarefa: "/n);
-  
+
     scanf("%s", &tarefa.nome);
-  
+
     printf("Digite o nome do projeto: "/n);
-  
-    scanf("%s", &tarefa.projeto); 
-   
+
+    scanf("%s", &tarefa.projeto);
+
     printf("Digite a data de inicio: "/n);
 
     scanf("%d", &tarefa.inicio.dia);
@@ -132,3 +134,4 @@ Fila* liberaFila (Fila* f)
 
   return 0;
 }
+

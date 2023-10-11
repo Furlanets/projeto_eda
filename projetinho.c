@@ -3,11 +3,12 @@
 #include <string.h>
 #include <locale.h>
 
-struct data{;
+struct data{
     int dia;
     int mes;
     int ano;
-};typedef struct data Data;
+};
+typedef struct data Data;
 struct Tarefa {
   int codigo;
   char nome[30];
@@ -26,15 +27,47 @@ struct fila {
   No *fim;
 };typedef struct fila Fila;
 
+No* inserir_fim(No *f, Tarefa t);
+
+void InsereFila (Fila* f, Tarefa tarefa);
+
+void imprimeFila (Fila* f);
+
+Fila* liberaFila (Fila* f);
+
+void limparBuffer();
+
+Tarefa Criar_Tarefa();
+
+  int main()
+{
+  Tarefa tarefa;
+
+  tarefa = Criar_Tarefa();
+
+  return 0;
+}
+
+void limparBuffer()
+{
+    int c;
+    do
+    {
+        c = getchar();
+    } while (c != '\n' && c != EOF);      //E0F = End of File;    Roda o bufer inteiro de memoria registrando os "\n", quando n'ao houver mais nenhum, ele detecta que eh o fim do arquivo]
+}
+
 No* inserir_fim(No *f, Tarefa t) {
   No *novo = (No*) malloc(sizeof(No));
   novo->info = t;
   novo->prox = NULL;
-  if (f==NULL) {
+  if (f == NULL) {
+    return novo;
+  } else {
     f->prox = novo;
-
-  return novo;
+    return novo;
   }
+}
 
 void InsereFila (Fila* f, Tarefa tarefa)
 {
@@ -43,38 +76,16 @@ void InsereFila (Fila* f, Tarefa tarefa)
     f->inicio = f->fim;
 }
 
-No* retira_inicio (No* inicio)
-{
-    No* p = inicio->prox;
-    free(inicio);
-    return p;
-}
-
-int RetiraFila (Fila* f)
-{
-    int v;
-    if (VaziaFila(f))
-    {
-        printf("Fila vazia.\n");
-        exit(0); /* aborta programa */
-    }
-    if (f->inicio == NULL) {
-  printf("Fila vazia!\n");
-  exit(1);
-    v = f->inicio->info;
-    f->inicio = retira_inicio(f->inicio);
-    if (f->inicio == NULL) /* fila ficou vazia? */
-    f->fim = NULL;
-    return v;
-}
-
 void imprimeFila (Fila* f)
 {
     No* q;
     printf("\n\t\t");
     for (q=f->inicio; q!=NULL; q=q->prox)
     {
-        printf("%d - ",q->info);
+        printf("Codigo: %d, Nome: %s, Projeto: %s, Data de inicio: %d/%d/%d, Data de termino: %d/%d/%d\n",
+               q->info.codigo, q->info.nome, q->info.projeto,
+               q->info.inicio.dia, q->info.inicio.mes, q->info.inicio.ano,
+               q->info.termino.dia, q->info.termino.mes, q->info.termino.ano);
     }
     printf("\n");
 }
@@ -92,36 +103,45 @@ Fila* liberaFila (Fila* f)
     return NULL;
 }
 
-
-
-}
-  int main()
+Tarefa Criar_Tarefa()
 {
-  struct Tarefa tarefa;
+  Tarefa tarefa;
 
-    printf("Digite o codigo da tarefa: "/n);
+    printf("Digite o codigo da tarefa: \n");
 
     scanf("%d", &tarefa.codigo);
 
-    printf("Digite o nome da tarefa: "/n);
+    limparBuffer();
 
-    scanf("%s", &tarefa.nome);
+    printf("Digite o nome da tarefa: \n");
 
-    printf("Digite o nome do projeto: "/n);
+    scanf("%s", tarefa.nome);
 
-    scanf("%s", &tarefa.projeto);
+    limparBuffer();
 
-    printf("Digite a data de inicio: "/n);
+    printf("Digite o nome do projeto: \n");
+
+    scanf("%s", tarefa.projeto);
+
+    limparBuffer();
+
+    printf("Digite a data de inicio: \n");
 
     scanf("%d", &tarefa.inicio.dia);
+    limparBuffer();
     scanf("%d", &tarefa.inicio.mes);
+    limparBuffer();
     scanf("%d", &tarefa.inicio.ano);
+    limparBuffer();
 
-    printf("Digite a data de termino: "/n);
+    printf("Digite a data de termino: \n");
 
     scanf("%d", &tarefa.termino.dia);
+    limparBuffer();
     scanf("%d", &tarefa.termino.mes);
+    limparBuffer();
     scanf("%d", &tarefa.termino.ano);
+    limparBuffer();
 
     printf("Codigo: %d\n", tarefa.codigo);
 
@@ -133,8 +153,5 @@ Fila* liberaFila (Fila* f)
 
     printf("Data de termino: %d/%d/%d\n", tarefa.termino.dia, tarefa.termino.mes, tarefa.termino.ano);
 
-
-
-  return 0;
+  return tarefa;
 }
-

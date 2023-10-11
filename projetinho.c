@@ -15,6 +15,7 @@ struct Tarefa {
   char projeto[30];
   Data inicio;
   Data termino;
+  int Status;
 };typedef struct Tarefa Tarefa;
 
 struct no {
@@ -27,60 +28,62 @@ struct fila {
   No *fim;
 };typedef struct fila Fila;
 
+void limparBuffer();
+
 No* inserir_fim(No *f, Tarefa t);
 
-void InsereFila (Fila* f, Tarefa tarefa);
+void insereFila (Fila* f, Tarefa tarefa);
 
 void imprimeFila (Fila* f);
 
 Fila* liberaFila (Fila* f);
 
-void limparBuffer();
+Fila* CriaFila ();
 
 Tarefa Criar_Tarefa();
 
+int ComparaDia(Data dataInicio, Data dataTermino);
+
+  int menu();
+
   int main()
 {
-    int escolha;
-  printf("Bem vindo ao sistema de gerenciamento de tarefas!\n");
 
-  printf("Digite 1 para inserir uma tarefa\n");
+  do{
 
-  printf("Digite 2 para remover uma tarefa\n");
+  int escolha = menu();
 
-  printf("Digite 3 para listar as tarefas\n");
-
-  printf("Digite 4 para terminar o programa\n");
-
-  printf("Digite sua escolha: \n");
-
-  scanf("%d", &escolha);
-
-  switch (escolha){
+  switch(escolha){
 
     case 1:
-      printf("Inserindo tarefa\n");
+      printf("\n\n-Inserindo tarefa-\n");
       Tarefa t = Criar_Tarefa();
       break;
 
     case 2:
-      printf("Remover tarefa\n");
+      printf("\n\n-Removendo tarefa-\n");
       break;
 
     case 3:
-      printf("Listar tarefas\n");
+      printf("\n\n-Listando tarefas\n");
       break;
 
     case 4:
-      printf("programa terminado\n");
+      printf("\n\n-Programa terminado-\n");
+      return 0;
       break;
   }
-  
-  return 
+
+  } while(menu != 4);
+
 
   Tarefa tarefa;
 
   tarefa = Criar_Tarefa();
+
+  Fila* f =  CriaFila();
+
+  insereFila(f, tarefa);
 
   return 0;
 }
@@ -106,7 +109,7 @@ No* inserir_fim(No *f, Tarefa t) {
   }
 }
 
-void InsereFila (Fila* f, Tarefa tarefa)
+void insereFila (Fila* f, Tarefa tarefa)
 {
     f->fim = inserir_fim(f->fim,tarefa);
     if (f->inicio==NULL) /* fila antes vazia? */
@@ -140,30 +143,37 @@ Fila* liberaFila (Fila* f)
     return NULL;
 }
 
+Fila* CriaFila ()
+{
+    Fila* f = (Fila*) malloc(sizeof(Fila));
+    f->inicio = f->fim = NULL;
+    return f;
+}
 
 Tarefa Criar_Tarefa()
+
 {
   Tarefa tarefa;
 
-    printf("Digite o codigo da tarefa: \n");
+    printf("\nDigite o codigo da tarefa: \n\n");
 
     scanf("%d", &tarefa.codigo);
 
     limparBuffer();
 
-    printf("Digite o nome da tarefa: \n");
+    printf("\nDigite o nome da tarefa: \n\n");
 
     scanf("%s", tarefa.nome);
 
     limparBuffer();
 
-    printf("Digite o nome do projeto: \n");
+    printf("\nDigite o nome do projeto: \n\n");
 
     scanf("%s", tarefa.projeto);
 
     limparBuffer();
 
-    printf("Digite a data de inicio: \n");
+    printf("\nDigite a data de inicio: \n\n");
 
     scanf("%d", &tarefa.inicio.dia);
     limparBuffer();
@@ -172,7 +182,7 @@ Tarefa Criar_Tarefa()
     scanf("%d", &tarefa.inicio.ano);
     limparBuffer();
 
-    printf("Digite a data de termino: \n");
+    printf("\nDigite a data de termino: \n");
 
     scanf("%d", &tarefa.termino.dia);
     limparBuffer();
@@ -191,5 +201,70 @@ Tarefa Criar_Tarefa()
 
     printf("Data de termino: %d/%d/%d\n", tarefa.termino.dia, tarefa.termino.mes, tarefa.termino.ano);
 
-  return tarefa;
+    printf("A tarefa possui alguma pendencia? (s - Sim, n - Nao)\n");
+
+    char pendencia = getchar();
+    fflush(stdin);
+
+    if
+    (pendencia == 's' || pendencia == 'S')
+    {
+      tarefa.Status = 1;
+      printf("\nTarefa pendente\n");
+    }
+    else
+
+    if
+    (pendencia == 'n' || pendencia == 'N')
+    {
+      tarefa.Status = 0;
+      printf("\nTarefa concluida\n");
+    }
+
+    else
+    {
+      printf("Opcao invalida, tente novamente.\n");
+    }
+
 }
+
+int ComparaDia(Data dataInicio, Data dataTermino)
+
+
+{
+
+if (dataInicio.ano > dataTermino.ano){return 1;}
+else
+
+if (dataInicio.ano != dataTermino.ano){return 0;}
+else
+
+if (dataInicio.mes > dataTermino.mes){return 1;}
+else
+
+if (dataInicio.mes == dataTermino.mes && dataInicio.dia > dataTermino.dia){return 1;}
+
+else
+
+return 0;}
+
+int menu(){
+  int escolha;
+
+  printf("Bem vindo ao sistema de gerenciamento de tarefas!\n");
+
+  printf("Digite 1 para inserir uma tarefa\n");
+
+  printf("Digite 2 para remover uma tarefa\n");
+
+  printf("Digite 3 para listar as tarefas\n");
+
+  printf("Digite 4 para terminar o programa\n");
+
+  printf("Digite sua escolha: \n");
+
+  scanf("%d", &escolha);
+
+  limparBuffer();
+
+  return escolha;}

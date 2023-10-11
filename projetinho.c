@@ -45,12 +45,32 @@ Tarefa Criar_Tarefa();
 int ComparaDia(Data dataInicio, Data dataTermino);
 
 
-
-
-
-
   int main()
 {
+  int menu();
+
+  int escolha = menu();
+
+  switch(escolha){
+
+    case 1:
+      printf("\n\n-Inserindo tarefa-\n");
+      Tarefa t = Criar_Tarefa();
+      break;
+
+    case 2:
+      printf("\n\n-Removendo tarefa-\n");
+      break;
+
+    case 3:
+      printf("\n\n-Listando tarefas\n");
+      break;
+
+    case 4:
+      printf("\n\n-Programa terminado-\n");
+      break;
+  }
+
   Tarefa tarefa;
 
   tarefa = Criar_Tarefa();
@@ -61,15 +81,6 @@ int ComparaDia(Data dataInicio, Data dataTermino);
 
   return 0;
 }
-
-
-
-
-
-
-
-
-
 
 void limparBuffer()
 {
@@ -138,25 +149,25 @@ Tarefa Criar_Tarefa()
 {
   Tarefa tarefa;
 
-    printf("Digite o codigo da tarefa: \n");
+    printf("\nDigite o codigo da tarefa: \n\n");
 
     scanf("%d", &tarefa.codigo);
 
     limparBuffer();
 
-    printf("Digite o nome da tarefa: \n");
+    printf("\nDigite o nome da tarefa: \n\n");
 
     scanf("%s", tarefa.nome);
 
     limparBuffer();
 
-    printf("Digite o nome do projeto: \n");
+    printf("\nDigite o nome do projeto: \n\n");
 
     scanf("%s", tarefa.projeto);
 
     limparBuffer();
 
-    printf("Digite a data de inicio: \n");
+    printf("\nDigite a data de inicio: \n\n");
 
     scanf("%d", &tarefa.inicio.dia);
     limparBuffer();
@@ -165,7 +176,7 @@ Tarefa Criar_Tarefa()
     scanf("%d", &tarefa.inicio.ano);
     limparBuffer();
 
-    printf("Digite a data de termino: \n");
+    printf("\nDigite a data de termino: \n");
 
     scanf("%d", &tarefa.termino.dia);
     limparBuffer();
@@ -193,6 +204,7 @@ Tarefa Criar_Tarefa()
     (pendencia == 's' || pendencia == 'S')
     {
       tarefa.Status = 1;
+      printf("\nTarefa pendente\n");
     }
     else
 
@@ -200,6 +212,7 @@ Tarefa Criar_Tarefa()
     (pendencia == 'n' || pendencia == 'N')
     {
       tarefa.Status = 0;
+      printf("\nTarefa concluida\n");
     }
 
     else
@@ -207,19 +220,11 @@ Tarefa Criar_Tarefa()
       printf("Opcao invalida, tente novamente.\n");
     }
 
-    printf("Status: %d\n", tarefa.Status);
-
     return tarefa;
 }
 
-    
-
-    ///tarefa.Status = 0;
-
-  ////return tarefa;
-///}
-
 int ComparaDia(Data dataInicio, Data dataTermino) 
+
 
 {     
   
@@ -237,3 +242,22 @@ if (dataInicio.mes == dataTermino.mes && dataInicio.dia > dataTermino.dia){retur
 else
 
 return 0;}
+
+int menu(){
+  int escolha;
+
+  printf("Bem vindo ao sistema de gerenciamento de tarefas!\n");
+
+  printf("Digite 1 para inserir uma tarefa\n");
+
+  printf("Digite 2 para remover uma tarefa\n");
+
+  printf("Digite 3 para listar as tarefas\n");
+
+  printf("Digite 4 para terminar o programa\n");
+
+  printf("Digite sua escolha: \n");
+
+  scanf("%d", &escolha);
+  limparBuffer();
+  return escolha;}

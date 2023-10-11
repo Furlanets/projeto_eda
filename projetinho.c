@@ -58,6 +58,9 @@ int RetiraFila (Fila* f)
         printf("Fila vazia.\n");
         exit(0); /* aborta programa */
     }
+    if (f->inicio == NULL) {
+  printf("Fila vazia!\n");
+  exit(1);
     v = f->inicio->info;
     f->inicio = retira_inicio(f->inicio);
     if (f->inicio == NULL) /* fila ficou vazia? */

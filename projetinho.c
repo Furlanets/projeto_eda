@@ -15,6 +15,7 @@ struct Tarefa {
   char projeto[30];
   Data inicio;
   Data termino;
+  int Status;
 };typedef struct Tarefa Tarefa;
 
 struct no {
@@ -27,17 +28,26 @@ struct fila {
   No *fim;
 };typedef struct fila Fila;
 
+void limparBuffer();
+
 No* inserir_fim(No *f, Tarefa t);
 
-void InsereFila (Fila* f, Tarefa tarefa);
+void insereFila (Fila* f, Tarefa tarefa);
 
 void imprimeFila (Fila* f);
 
 Fila* liberaFila (Fila* f);
 
-void limparBuffer();
+Fila* CriaFila ();
 
 Tarefa Criar_Tarefa();
+
+int ComparaDia(Data dataInicio, Data dataTermino);
+
+
+
+
+
 
   int main()
 {
@@ -45,8 +55,21 @@ Tarefa Criar_Tarefa();
 
   tarefa = Criar_Tarefa();
 
+  Fila* f =  CriaFila();
+
+  insereFila(f, tarefa);
+
   return 0;
 }
+
+
+
+
+
+
+
+
+
 
 void limparBuffer()
 {
@@ -69,7 +92,7 @@ No* inserir_fim(No *f, Tarefa t) {
   }
 }
 
-void InsereFila (Fila* f, Tarefa tarefa)
+void insereFila (Fila* f, Tarefa tarefa)
 {
     f->fim = inserir_fim(f->fim,tarefa);
     if (f->inicio==NULL) /* fila antes vazia? */
@@ -103,7 +126,15 @@ Fila* liberaFila (Fila* f)
     return NULL;
 }
 
+Fila* CriaFila ()
+{
+    Fila* f = (Fila*) malloc(sizeof(Fila));
+    f->inicio = f->fim = NULL;
+    return f;
+}
+
 Tarefa Criar_Tarefa()
+
 {
   Tarefa tarefa;
 
@@ -153,5 +184,56 @@ Tarefa Criar_Tarefa()
 
     printf("Data de termino: %d/%d/%d\n", tarefa.termino.dia, tarefa.termino.mes, tarefa.termino.ano);
 
-  return tarefa;
+    printf("A tarefa possui alguma pendencia? (s - Sim, n - Nao)\n");
+
+    char pendencia = getchar();
+    fflush(stdin);
+
+    if
+    (pendencia == 's' || pendencia == 'S')
+    {
+      tarefa.Status = 1;
+    }
+    else
+
+    if
+    (pendencia == 'n' || pendencia == 'N')
+    {
+      tarefa.Status = 0;
+    }
+
+    else
+    {
+      printf("Opcao invalida, tente novamente.\n");
+    }
+
+    printf("Status: %d\n", tarefa.Status);
+
+    return tarefa;
 }
+
+    
+
+    ///tarefa.Status = 0;
+
+  ////return tarefa;
+///}
+
+int ComparaDia(Data dataInicio, Data dataTermino) 
+
+{     
+  
+if (dataInicio.ano > dataTermino.ano){return 1;}     
+else 
+
+if (dataInicio.ano != dataTermino.ano){return 0;}     
+else 
+
+if (dataInicio.mes > dataTermino.mes){return 1;}     
+else 
+
+if (dataInicio.mes == dataTermino.mes && dataInicio.dia > dataTermino.dia){return 1;}     
+
+else
+
+return 0;}

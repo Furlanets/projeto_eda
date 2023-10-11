@@ -41,6 +41,43 @@ Tarefa Criar_Tarefa();
 
   int main()
 {
+    int escolha;
+  printf("Bem vindo ao sistema de gerenciamento de tarefas!\n");
+
+  printf("Digite 1 para inserir uma tarefa\n");
+
+  printf("Digite 2 para remover uma tarefa\n");
+
+  printf("Digite 3 para listar as tarefas\n");
+
+  printf("Digite 4 para terminar o programa\n");
+
+  printf("Digite sua escolha: \n");
+
+  scanf("%d", &escolha);
+
+  switch (escolha){
+
+    case 1:
+      printf("Inserindo tarefa\n");
+      Tarefa t = Criar_Tarefa();
+      break;
+
+    case 2:
+      printf("Remover tarefa\n");
+      break;
+
+    case 3:
+      printf("Listar tarefas\n");
+      break;
+
+    case 4:
+      printf("programa terminado\n");
+      break;
+  }
+  
+  return 
+
   Tarefa tarefa;
 
   tarefa = Criar_Tarefa();
@@ -102,6 +139,7 @@ Fila* liberaFila (Fila* f)
     free(f);
     return NULL;
 }
+
 
 Tarefa Criar_Tarefa()
 {

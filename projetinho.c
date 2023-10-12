@@ -40,14 +40,21 @@ Fila* liberaFila (Fila* f);
 
 Fila* CriaFila ();
 
-Tarefa Criar_Tarefa();
+Tarefa Criar_Tarefa(int codigo);
+
+Tarefa Modifica_Tarefa();
 
 int ComparaDia(Data dataInicio, Data dataTermino);
 
+  int menu();
 
   int main()
 {
-  int menu();
+    
+  int codigo = 0;
+
+  do{
+
 
   int escolha = menu();
 
@@ -55,7 +62,7 @@ int ComparaDia(Data dataInicio, Data dataTermino);
 
     case 1:
       printf("\n\n-Inserindo tarefa-\n");
-      Tarefa t = Criar_Tarefa();
+      Tarefa t = Criar_Tarefa(codigo);
       break;
 
     case 2:
@@ -63,21 +70,32 @@ int ComparaDia(Data dataInicio, Data dataTermino);
       break;
 
     case 3:
-      printf("\n\n-Listando tarefas\n");
+      printf("\n\n-Modificando tarefa-\n");
+      Tarefa Modifica_Tarefa();
       break;
 
     case 4:
+      printf("\n\n-Listando tarefas\n");
+      break;
+
+    case 5:
       printf("\n\n-Programa terminado-\n");
+      return 0;
       break;
   }
 
+  } while(menu != 4);
+
+
   Tarefa tarefa;
 
-  tarefa = Criar_Tarefa();
+  tarefa = Criar_Tarefa(codigo);
 
   Fila* f =  CriaFila();
 
   insereFila(f, tarefa);
+
+
 
   return 0;
 }
@@ -144,14 +162,22 @@ Fila* CriaFila ()
     return f;
 }
 
-Tarefa Criar_Tarefa()
+Tarefa Criar_Tarefa(int codigo)
 
 {
   Tarefa tarefa;
 
+if(codigo == 0){
+
     printf("\nDigite o codigo da tarefa: \n\n");
 
-    scanf("%d", &tarefa.codigo);
+    scanf("%d", &tarefa.codigo);}
+
+    else{
+
+    tarefa.codigo = codigo;
+
+    }
 
     limparBuffer();
 
@@ -204,7 +230,7 @@ Tarefa Criar_Tarefa()
     (pendencia == 's' || pendencia == 'S')
     {
       tarefa.Status = 1;
-      printf("\nTarefa pendente\n");
+      printf("\nTarefa definida como pendente.\n\n");
     }
     else
 
@@ -212,38 +238,39 @@ Tarefa Criar_Tarefa()
     (pendencia == 'n' || pendencia == 'N')
     {
       tarefa.Status = 0;
-      printf("\nTarefa concluida\n");
+      printf("\nTarefa definida como concluida.\n\n");
     }
 
     else
     {
-      printf("Opcao invalida, tente novamente.\n");
+      printf("\nOpcao invalida, tente novamente.\n\n");
     }
 
-    return tarefa;
+return tarefa;
 }
 
-int ComparaDia(Data dataInicio, Data dataTermino) 
+int ComparaDia(Data dataInicio, Data dataTermino)
 
 
-{     
-  
-if (dataInicio.ano > dataTermino.ano){return 1;}     
-else 
+{
 
-if (dataInicio.ano != dataTermino.ano){return 0;}     
-else 
+if (dataInicio.ano > dataTermino.ano){return 1;}
+else
 
-if (dataInicio.mes > dataTermino.mes){return 1;}     
-else 
+if (dataInicio.ano != dataTermino.ano){return 0;}
+else
 
-if (dataInicio.mes == dataTermino.mes && dataInicio.dia > dataTermino.dia){return 1;}     
+if (dataInicio.mes > dataTermino.mes){return 1;}
+else
+
+if (dataInicio.mes == dataTermino.mes && dataInicio.dia > dataTermino.dia){return 1;}
 
 else
 
 return 0;}
 
-int menu(){
+int menu()
+{
   int escolha;
 
   printf("Bem vindo ao sistema de gerenciamento de tarefas!\n");
@@ -252,12 +279,53 @@ int menu(){
 
   printf("Digite 2 para remover uma tarefa\n");
 
-  printf("Digite 3 para listar as tarefas\n");
+  printf("Digite 3 para modificar uma tarefa\n");
 
-  printf("Digite 4 para terminar o programa\n");
+  printf("Digite 4 para listar as tarefas\n");
+
+  printf("Digite 5 para terminar o programa\n");
 
   printf("Digite sua escolha: \n");
 
   scanf("%d", &escolha);
+
   limparBuffer();
-  return escolha;}
+
+return escolha;}
+
+void Imprime_Tarefa(Tarefa info)
+{
+printf("Codigo da tarefa: %d\n", info.codigo);
+    printf("Nome da tarefa: %s\n", info.nome);
+    printf("Nome do projeto: %s\n", info.projeto);
+    printf("Data de inicio da tarefa: %2d/%2d/%2d\n", info.inicio.dia, info.inicio.mes, info.inicio.ano);
+    printf("Data de termino da tarefa: %2d/%2d/%2d\n", info.termino.dia, info.termino.mes, info.termino.ano);
+    printf("Status da tarefa: %d\n", info.Status);
+    printf("\n");
+}
+
+Tarefa Modifica_Tarefa(Fila* f)
+
+{   No* aux = f->inicio;
+
+    int codigo;
+
+    printf("Digite o codigo da tarefa que deseja modificar: \n");
+    scanf("%d", &codigo);
+
+    while(aux!=NULL)
+    {
+
+        if(aux->info.codigo = codigo)
+        {
+        Imprime_Tarefa(aux->info);
+        }
+        
+        aux = aux->prox;
+
+    }
+
+    Tarefa nova_tarefa = Criar_Tarefa(codigo);
+
+    return nova_tarefa;
+}

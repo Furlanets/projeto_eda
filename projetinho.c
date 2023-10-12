@@ -40,21 +40,27 @@ Fila* liberaFila (Fila* f);
 
 Fila* CriaFila ();
 
-Tarefa Criar_Tarefa(int codigo);
-
-Tarefa Modifica_Tarefa();
+Tarefa Criar_Tarefa(int codigo, int Status);
 
 int ComparaDia(Data dataInicio, Data dataTermino);
 
-  int menu();
+int menu();
 
-  int main()
+void Modifica_Tarefa();
+
+void trocatarefa(Fila* fila, Tarefa tarefa);
+
+int main()
 {
     
   int codigo = 0;
+  int looping = 1;
+  int Status = 2;
+  Fila* fila = CriaFila();
 
   do{
-
+  
+  Status = 2;
 
   int escolha = menu();
 
@@ -62,7 +68,8 @@ int ComparaDia(Data dataInicio, Data dataTermino);
 
     case 1:
       printf("\n\n-Inserindo tarefa-\n");
-      Tarefa t = Criar_Tarefa(codigo);
+      Tarefa t = Criar_Tarefa(codigo, Status);
+      insereFila(fila, t);
       break;
 
     case 2:
@@ -71,11 +78,12 @@ int ComparaDia(Data dataInicio, Data dataTermino);
 
     case 3:
       printf("\n\n-Modificando tarefa-\n");
-      Tarefa Modifica_Tarefa();
+      Modifica_Tarefa(fila);
       break;
 
     case 4:
       printf("\n\n-Listando tarefas\n");
+      imprimeFila(fila);
       break;
 
     case 5:
@@ -84,18 +92,7 @@ int ComparaDia(Data dataInicio, Data dataTermino);
       break;
   }
 
-  } while(menu != 4);
-
-
-  Tarefa tarefa;
-
-  tarefa = Criar_Tarefa(codigo);
-
-  Fila* f =  CriaFila();
-
-  insereFila(f, tarefa);
-
-
+  } while(looping == 1);
 
   return 0;
 }
@@ -131,7 +128,7 @@ void insereFila (Fila* f, Tarefa tarefa)
 void imprimeFila (Fila* f)
 {
     No* q;
-    printf("\n\t\t");
+    printf("\n\n");
     for (q=f->inicio; q!=NULL; q=q->prox)
     {
         printf("Codigo: %d, Nome: %s, Projeto: %s, Data de inicio: %d/%d/%d, Data de termino: %d/%d/%d\n",
@@ -162,7 +159,7 @@ Fila* CriaFila ()
     return f;
 }
 
-Tarefa Criar_Tarefa(int codigo)
+Tarefa Criar_Tarefa(int codigo, int Status)
 
 {
   Tarefa tarefa;
@@ -220,9 +217,14 @@ if(codigo == 0){
     printf("Data de inicio: %d/%d/%d\n", tarefa.inicio.dia, tarefa.inicio.mes, tarefa.inicio.ano);
 
     printf("Data de termino: %d/%d/%d\n", tarefa.termino.dia, tarefa.termino.mes, tarefa.termino.ano);
-
-    printf("A tarefa possui alguma pendencia? (s - Sim, n - Nao)\n");
-
+    
+    if(Status == 0 || Status == 1){
+        tarefa.Status = Status;
+    }
+    else{
+        
+        printf("A tarefa possui alguma pendencia? (s - Sim, n - Nao)\n");
+    fflush(stdin);
     char pendencia = getchar();
     fflush(stdin);
 
@@ -245,7 +247,8 @@ if(codigo == 0){
     {
       printf("\nOpcao invalida, tente novamente.\n\n");
     }
-
+    
+    }
 return tarefa;
 }
 
@@ -304,11 +307,13 @@ printf("Codigo da tarefa: %d\n", info.codigo);
     printf("\n");
 }
 
-Tarefa Modifica_Tarefa(Fila* f)
+void Modifica_Tarefa(Fila* f)
 
 {   No* aux = f->inicio;
 
-    int codigo;
+    int codigo = 0;
+    Tarefa tarefa_aux;
+    printf("teste");
 
     printf("Digite o codigo da tarefa que deseja modificar: \n");
     scanf("%d", &codigo);
@@ -316,8 +321,9 @@ Tarefa Modifica_Tarefa(Fila* f)
     while(aux!=NULL)
     {
 
-        if(aux->info.codigo = codigo)
+        if(aux->info.codigo == codigo)
         {
+        tarefa_aux = aux->info;
         Imprime_Tarefa(aux->info);
         }
         
@@ -325,7 +331,24 @@ Tarefa Modifica_Tarefa(Fila* f)
 
     }
 
-    Tarefa nova_tarefa = Criar_Tarefa(codigo);
+    Tarefa nova_tarefa = Criar_Tarefa(codigo, tarefa_aux.Status);
+    trocatarefa(f, nova_tarefa);
 
-    return nova_tarefa;
+    menu();
+}
+
+void trocatarefa(Fila* fila, Tarefa tarefa)
+{
+
+    No *aux = fila->inicio;
+    while(aux != NULL){
+    printf("%s", aux->info.codigo);
+        if(aux->info.codigo == tarefa.codigo){
+            printf("Tarefa encontrada\n");
+
+            aux->info = tarefa;
+        }
+        aux = aux->prox;
+    }
+    
 }
